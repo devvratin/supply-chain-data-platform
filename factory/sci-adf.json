@@ -1,0 +1,15 @@
+{
+	"name": "sci-adf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1df473f1-4271-4baa-b399-10ddbfe76b7f",
+		"tenantId": "89005713-f9ba-423a-bd95-1ffe3a286b26"
+	}
+}
