@@ -1,0 +1,11 @@
+{
+	"name": "storesci_adf_ls",
+	"properties": {
+		"description": "linked service between storesci (Data lake storage ) and adf",
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://storesci.dfs.core.windows.net/"
+		}
+	}
+}
