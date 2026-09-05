@@ -1,0 +1,23 @@
+{
+	"name": "sci_sbi_ls",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sci-server.database.windows.net",
+			"database": "sbi_db",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "devvrat",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "sci_scik_ls",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sql-svr-kv"
+			}
+		}
+	}
+}
