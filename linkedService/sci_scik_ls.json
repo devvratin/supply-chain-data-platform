@@ -1,0 +1,11 @@
+{
+	"name": "sci_scik_ls",
+	"properties": {
+		"description": "Making linked service between sci-adf and and scik ",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://scik.vault.azure.net/"
+		}
+	}
+}
