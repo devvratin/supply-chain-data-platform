@@ -53,7 +53,7 @@
 					"batchCount": 6,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "cp_sqlToBronze",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -65,8 +65,62 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"enableStaging": false
-							}
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "00:30:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema_name": {
+											"value": "@item().schema",
+											"type": "Expression"
+										},
+										"table_name": {
+											"value": "@item().table",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_adls_bronze_parquet",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder_path": {
+											"value": "sql/@{toLower(item().table)}/@{formatDateTime(utcNow(),'yyyy')}/@{formatDateTime(utcNow())}",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@{toLower(item().table)}_@{formatDateTime(utcNow(),'yyyyMMddHHmmss')}.parquet",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
