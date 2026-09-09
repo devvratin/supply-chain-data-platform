@@ -158,7 +158,17 @@
 								},
 								"dataset": {
 									"referenceName": "ds_sql",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema_name": {
+											"value": "@item().schema\n",
+											"type": "Expression"
+										},
+										"table_name": {
+											"value": "@item().table",
+											"type": "Expression"
+										}
+									}
 								}
 							}
 						}
