@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "ds_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sci_sbi_ls",

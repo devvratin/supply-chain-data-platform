@@ -55,7 +55,14 @@
 						{
 							"name": "cp_sqlToBronze",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "lkp_sql_safe_query",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -67,7 +74,11 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"queryTimeout": "00:30:00",
+									"sqlReaderQuery": {
+										"value": "@activity('lkp_sql_safe_query').output.firstRow.safe_query",
+										"type": "Expression"
+									},
+									"queryTimeout": "00:41:00",
 									"partitionOption": "None"
 								},
 								"sink": {
@@ -91,7 +102,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AzureSqlTable1",
+									"referenceName": "ds_sql",
 									"type": "DatasetReference",
 									"parameters": {
 										"schema_name": {
@@ -121,6 +132,35 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "lkp_sql_safe_query",
+							"description": "This will look for tables and return a query which will not contain col",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "EXEC dbo.usp_GetSafeSelectQuery '@{item().schema}', '@{item().table}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_sql",
+									"type": "DatasetReference"
+								}
+							}
 						}
 					]
 				}
